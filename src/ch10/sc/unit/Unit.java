@@ -1,6 +1,6 @@
 package ch10.sc.unit;
 
-public class Unit {
+public abstract class Unit {
 
 	int num;
 	int hp;
@@ -26,6 +26,20 @@ public class Unit {
 		this.hp = hp;
 	}
 	
-	public void reportStatus() {}
+	public void reportStatus() {
+		System.out.println(this);  // System.out.println(this.toString()); 과 동일 (하위 클래스에서 toString을 오버라이드 했으므로)
+	}
+	
+	// 데미지를 양수로 반환
+	int calcDamage(int atkDamage) {
+//		return def - atkDamage;
+		return 0;  // dummy를 넣어주기
+	}
+	
+	public void getAttacked(int atkDamage, int count) {
+		this.hp -= calcDamage(atkDamage) * count;
+	}
+
+	abstract void attack(Unit u, int count);
 	
 }

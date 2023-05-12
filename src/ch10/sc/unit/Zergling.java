@@ -4,14 +4,14 @@ public class Zergling extends Unit {
 
 	static int atk;
 	static int def;
-	static String weapon;
-	static String type;
+	static final String WEAPON;
+	static final String TYPE;
 	
 	static {
 		atk = 5;
 		def = 0;
-		weapon = "발톱";
-		type = "저글링";
+		WEAPON = "발톱";
+		TYPE = "저글링";
 	}
 	
 	public Zergling() {
@@ -27,30 +27,26 @@ public class Zergling extends Unit {
 	}
 	
 	@Override
-	public void reportStatus() {
-		System.out.println(type + "#" + num + ":");
-		System.out.println(String.format("  - 생명력: %d, 공격력: %d, 방어력: %d", 
-				this.hp, atk, def));
-		System.out.println("  - 무기 이름: " + weapon + "\n");
+	public String toString() {
+		String result = TYPE + "#" + num + ":\n";
+		result += String.format("  [생명력: %d, 공격력: %d, 방어력: %d, 무기 이름: %s]", 
+				this.hp, atk, def, WEAPON);
+		
+		return result;
 	}
 	
 	@Override
-	public String toString() {
-		String report = type + "#" + num + ":\n";
-		report += String.format("  - 생명력: %d, 공격력: %d, 방어력: %d\n", 
-				this.hp, atk, def);
-		report += "  - 무기 이름: " + weapon + "\n";
-		
-		return report;
+	int calcDamage(int atkDamage) {
+		return atkDamage - Zergling.def;
 	}
 	
-	private int calcDamage(int atkDamage) {
-		return def - atkDamage;
-	}
+//	public void getAttacked(int atkDamage, int count) {
+////		this.hp += (this.def - atkDamage) * count;
+//		this.hp += calcDamage(atkDamage) * count;
+//	}
 	
-	public void getAttacked(int atkDamage, int count) {
-//		this.hp += (this.def - atkDamage) * count;
-		this.hp += calcDamage(atkDamage) * count;
+	public void attack(Unit u, int count) {
+		u.getAttacked(atk, count);
 	}
 	
 }
